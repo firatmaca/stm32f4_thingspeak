@@ -113,7 +113,7 @@ USART_InitStruct.USART_BaudRate = 115200;
  USART_InitStruct.USART_StopBits = USART_StopBits_1;
  USART_InitStruct.USART_WordLength = USART_WordLength_8b;
  USART_Init(USART2, &USART_InitStruct);
- USART_Cmd(USART2, ENABLE); // USART3 aktif edilir.
+ USART_Cmd(USART2, ENABLE); // USART2 aktif edilir.
 
 /* USART1 Rx interrupt aktif ediliyor
  * USART'dan herhangi bir data geldiginde
@@ -178,7 +178,8 @@ case 2:
 
 case 3:
 	USART_puts(USART2,"case3");
- // Gelen cevap mode 1 'mi
+ // sprintf(str,"Firatmaca \r \n");
+	      //   USART_SendData(USART2,*str); //cevap mode 1 'mi
  if (strstr(g_arrui8ESP8266Buf,"+CWMODE:1") != NULL)
  {
  Clear_ESPBuffer();
@@ -189,7 +190,7 @@ case 3:
  {
  // Fabrika ayarlari olarak 2 geliyor biz onu 1 yapip reset komutu ile tamamlariz.
  USART_puts(USART1,"AT+CWMODE=1\r\n");
- USART_puts(USART1,"AT+RST\r\n");
+ //USART_puts(USART1,"AT+RST\r\n");
  Delay(1000000L);
 
  Clear_ESPBuffer();
@@ -223,7 +224,7 @@ case 5:
  {
  Delay(1000000L);
  USART_puts(USART2,"Modeme Baglanti Bekleniyor.\n");
-	 /*
+	 
  Delay(5000000L);
  say2++;
  if(say2==3)
@@ -232,7 +233,7 @@ case 5:
  ESPInitCase=8;
  say2=0;
  }
-	 */
+	 
  }
  break;
 
@@ -279,8 +280,8 @@ case 8:
 case 9:
 	USART_puts(USART2,"case9");
  // Baglanti kuruldugunda Linked diye bir cevap aliriz.
- // if (strstr(g_arrui8ESP8266Buf,"CONNECT") != NULL)
-if (strstr(g_arrui8ESP8266Buf,"Linked") != NULL)
+  if (strstr(g_arrui8ESP8266Buf,"CONNECT") != NULL)
+//if (strstr(g_arrui8ESP8266Buf,"Linked") != NULL)
  {
  Clear_ESPBuffer();
  USART_puts(USART2,"Site ile baglanti kuruldu\n");
@@ -292,15 +293,14 @@ if (strstr(g_arrui8ESP8266Buf,"Linked") != NULL)
  Delay(1000000L);
  USART_puts(USART2,"siteye Baglanti Bekleniyor.\n");
  Delay(10000000L);
-	 /*
+	 
  say++;
  if(say==3)
  {
  USART_puts(USART2,"Siteye Baglanti kurulamadi.\n");
  ESPInitCase=8;
  say=0;
- }
- */
+ } 
  }
  break;
 
@@ -309,7 +309,7 @@ case 10:
  potdegeri=Read_ADC(); // adc okunuyor 
  
  
- sprintf(transmitdata, "GET /update?api_key=DWIK4ZSUYD76X8AI&field2&=%d\r\n",potdegeri);
+ sprintf(transmitdata, "GET https://api.thingspeak.com/update?api_key=DWIK4ZSUYD76X8AI&field1=%d\r\n",potdegeri);
  
  length=strlen(transmitdata); // gönderilecek datanin uzunlugu
  length=length+2;
@@ -335,7 +335,7 @@ case 10:
  USART_puts(USART2,"gönderilen data uzunlugu kabul edilmedi\n");
  ESPInitCase=8;
  USART_puts(USART2,"Siteye yeniden baglanilmaya çalisiliyor\n");
-	 /*
+	 
  say3++;
  if(say3==3)
  {
@@ -343,7 +343,7 @@ case 10:
  ESPInitCase=0;
  say3=0;
  }
-	 */
+	 
  }
 
 
