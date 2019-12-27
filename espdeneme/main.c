@@ -21,7 +21,7 @@ void Delay(uint32_t a){
 		}
 }
 	
-void USART_puts(USART_TypeDef* USARTx,volatile char *s) // char karakter sayisi kadar döndürüyor
+void USART_puts(USART_TypeDef* USARTx,volatile char *s) // char karakter sayisi kadar dÃ¶ndÃ¼rÃ¼yor
 {
  while(*s)
  {
@@ -51,8 +51,8 @@ void Usart_InitializeHW(void)
  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 /**
- * PB6 ve PB7 Pinleri alternatif fonksiyon olarak çalisacagi tanimlanir
- * @onemli Usartaktif etmeden önce çagrilmalidir.!
+ * PB6 ve PB7 Pinleri alternatif fonksiyon olarak Ã§alisacagi tanimlanir
+ * @onemli Usartaktif etmeden Ã¶nce Ã§agrilmalidir.!
  */
  GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_USART1); // TX()
  GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_USART1); // RX()
@@ -90,11 +90,11 @@ void Usart_InitializeAp(void)
  USART_InitTypeDef USART_InitStruct;
  NVIC_InitTypeDef NVIC_InitStructure;
  /**
- * USART1 modülüne Clock verilir.
+ * USART1 modÃ¼lÃ¼ne Clock verilir.
  */
  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
  /**
- * USART3 modülüne Clock verilir.
+ * USART3 modÃ¼lÃ¼ne Clock verilir.
  */
  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 
@@ -122,10 +122,10 @@ USART_InitStruct.USART_BaudRate = 115200;
  USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); // USART1 Rx interrupt aktif ediliyor
 
 NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn; // USART1 interrupt ina ince ayar vermek istiyoruz.
- NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;// Öncelik olarak bu interrupt kaynagina 0 veriyoruz. ( 0 yazarak En öncelikli kaynak yapiyoruz )
- NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; // Kendi bagli oldugu vektordeki alt grup içinde de en öncelikli olarak kurduk
+ NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;// Ã–ncelik olarak bu interrupt kaynagina 0 veriyoruz. ( 0 yazarak En Ã¶ncelikli kaynak yapiyoruz )
+ NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; // Kendi bagli oldugu vektordeki alt grup iÃ§inde de en Ã¶ncelikli olarak kurduk
  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; // USART1 interrupt kanali aktif edilir.
- NVIC_Init(&NVIC_InitStructure); // Yaptigimiz ayarlari NVIC birimine yüklüyoruz.
+ NVIC_Init(&NVIC_InitStructure); // Yaptigimiz ayarlari NVIC birimine yÃ¼klÃ¼yoruz.
 
 USART_Cmd(USART1, ENABLE); // Nihayetinde USART1 aktif edilir.
 }
@@ -198,14 +198,11 @@ case 3:
  ESPInitCase = 0;
  }
  break;
-//BlissCafe   bliss2019
- //SUPERONLINE_WIFI_3101    Cz2YXxfnvykv
- //iPhone firatmaca
- //SUPERONLINE-WiFi_8117     f531A464!!8669
+
 case 4:
 	USART_puts(USART2,"case4");
  // Baglanilacak olan wifi agina ait kullanici adi ve sifre girisi yapilir.
-  USART_puts(USART1,"AT+CWJAP=\"SUPERONLINE-WiFi_8117\",\"f531A464!!8669\"\r\n");
+  USART_puts(USART1,"AT+CWJAP=\"kullanÄ±cÄ± adÄ±\",\"ÅŸifre\"\r\n");
  // 1 saniye gecikme koyuyoruz.
  Delay(2000000L);
  ESPInitCase = 5;
@@ -311,7 +308,7 @@ case 10:
  
  sprintf(transmitdata, "GET https://api.thingspeak.com/update?api_key=DWIK4ZSUYD76X8AI&field1=%d\r\n",potdegeri);
  
- length=strlen(transmitdata); // gönderilecek datanin uzunlugu
+ length=strlen(transmitdata); // gÃ¶nderilecek datanin uzunlugu
  length=length+2;
  sprintf(transmitconf,"AT+CIPSEND=%d\r\n",length);
  
@@ -322,9 +319,9 @@ case 10:
  if (strstr(g_arrui8ESP8266Buf,">") != NULL)
  {
  Clear_ESPBuffer();
- USART_puts(USART2,"Gönderilen data uzunlugu kabul edildi\n");
+ USART_puts(USART2,"GÃ¶nderilen data uzunlugu kabul edildi\n");
  USART_puts(USART1,transmitdata);
- USART_puts(USART2,"Data gönderildi\n");
+ USART_puts(USART2,"Data gÃ¶nderildi\n");
  Delay(2000000L);
  ESPInitCase=10;
  }
@@ -332,9 +329,9 @@ case 10:
  {
  // Cevap gelene kadar bekler
  Delay(3000000L);
- USART_puts(USART2,"gönderilen data uzunlugu kabul edilmedi\n");
+ USART_puts(USART2,"gÃ¶nderilen data uzunlugu kabul edilmedi\n");
  ESPInitCase=8;
- USART_puts(USART2,"Siteye yeniden baglanilmaya çalisiliyor\n");
+ USART_puts(USART2,"Siteye yeniden baglanilmaya Ã§alisiliyor\n");
 	 
  say3++;
  if(say3==3)
@@ -383,10 +380,10 @@ void USART1_IRQHandler(void){
  // USART1 RX interrupt flag kontrol edilir.
  if( USART_GetITStatus(USART1, USART_IT_RXNE) )
  {
- uint8_t Received_Byte = USART1->DR; // Gelen bilgi degisken içine alinir.
+ uint8_t Received_Byte = USART1->DR; // Gelen bilgi degisken iÃ§ine alinir.
  USART2->DR = Received_Byte; // Debug monitor icin ayni bilgi usart3'e gonderilir.
 
-// Strstr fonksiyonu için eklendi, modülden null karakteri gelebiliyordu , onu engellemis olduk.
+// Strstr fonksiyonu iÃ§in eklendi, modÃ¼lden null karakteri gelebiliyordu , onu engellemis olduk.
  if(Received_Byte != 0)
  {
  g_arrui8ESP8266Buf[ESPWriteIndex] = Received_Byte;
@@ -414,7 +411,7 @@ GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN; // potansiyometrenin data pini A0 p
 ADC_DeInit();
  
  ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
- ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div4; // 4/8/16.. vs olabilir kristalin 4 de 1 i seçtik
+ ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div4; // 4/8/16.. vs olabilir kristalin 4 de 1 i seÃ§tik
  ADC_CommonInit(& ADC_CommonInitStructure);
  
  
@@ -435,10 +432,10 @@ ADC_DeInit();
 
 uint16_t Read_ADC(void)
 {
- ADC_RegularChannelConfig(ADC1,ADC_Channel_0,1, ADC_SampleTime_56Cycles); /*hesaplama islemi tek cycle da hesaplanmaz,genis sürede daha az ak1m ceker,
- tepki süresi önemli ise kisa tutulabilir */
- ADC_SoftwareStartConv(ADC1); // adc1 üzerinde yazilimsal dönüsümü baslat 
- while(ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC)==RESET); /*icerideki sart saglandikca assagiya inme while noktali virgül ile bitiyorsa,
- her dönüsüm sonrasi bayrak sifirlandi*/
+ ADC_RegularChannelConfig(ADC1,ADC_Channel_0,1, ADC_SampleTime_56Cycles); /*hesaplama islemi tek cycle da hesaplanmaz,genis sÃ¼rede daha az ak1m ceker,
+ tepki sÃ¼resi Ã¶nemli ise kisa tutulabilir */
+ ADC_SoftwareStartConv(ADC1); // adc1 Ã¼zerinde yazilimsal dÃ¶nÃ¼sÃ¼mÃ¼ baslat 
+ while(ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC)==RESET); /*icerideki sart saglandikca assagiya inme while noktali virgÃ¼l ile bitiyorsa,
+ her dÃ¶nÃ¼sÃ¼m sonrasi bayrak sifirlandi*/
  return ADC_GetConversionValue(ADC1); 
 }
